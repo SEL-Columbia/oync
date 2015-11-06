@@ -1,0 +1,10 @@
+oync:
+    image: "selcolumbia/oync"
+    volumes:
+      - ./:/oync
+    links:
+      - "db:db"
+db:
+    image: "mdillon/postgis:9.4"
+    environment:
+        POSTGRES_DB: 'osm'

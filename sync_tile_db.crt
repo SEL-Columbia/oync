@@ -1,2 +1,0 @@
-# Sync tile db every minute
-* * * * * export PATH=$PATH:/usr/local/bin; export SYNC_DIR=/home/tiles/sync_load; cd osm-utils; ./sync_tile_db.sh >> $SYNC_DIR/cron.log 2>&1

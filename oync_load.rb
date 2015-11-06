@@ -6,18 +6,18 @@ require 'nokogiri'
 require 'date'
 require 'fileutils'
 
-class SyncLoad
+class OyncLoad
 
   CHANGESET_DIR = "changesets"
   CHANGESET_ID_FILE = "changeset_ids.xml"
   
-  def initialize(api_url, sync_dir, postgis_db, osm_pgsql_style_file)
+  def initialize(api_url, oync_dir, postgis_db, osm_pgsql_style_file)
     @api_url = api_url
-    @sync_dir = sync_dir
+    @oync_dir = oync_dir
     @postgis_db = postgis_db
     @osm_pgsql_style_file = osm_pgsql_style_file
-    @changeset_dir = File.join(@sync_dir, CHANGESET_DIR)
-    @changeset_id_file = File.join(@sync_dir, CHANGESET_ID_FILE)
+    @changeset_dir = File.join(@oync_dir, CHANGESET_DIR)
+    @changeset_id_file = File.join(@oync_dir, CHANGESET_ID_FILE)
   end
 
   # get all changesets since last update
@@ -81,7 +81,7 @@ end
 require 'optparse'
 
 options = {}
-options[:config_file] = "./sync_load_cfg.rb"
+options[:config_file] = "./oync_cfg.rb"
 
 optparse = OptionParser.new do |opts|
   opts.on('-g', '--get-changesets TIMESTAMP', 'get changesets since last sync') do |timestamp|
@@ -113,14 +113,14 @@ begin
     exit 1
   end
 
-  # Read config and setup SyncLoad
+  # Read config and setup OyncLoad
   load options[:config_file]
 
   # check if nec vars are defined
-  required_vars = [:SYNC_LOAD_API_URL, 
-                   :SYNC_LOAD_SYNC_DIR, 
-                   :SYNC_LOAD_POSTGIS_DB,
-                   :SYNC_LOAD_STYLE_FILE]
+  required_vars = [:OYNC_OSM_API_URL, 
+                   :OYNC_LOAD_DIR, 
+                   :OYNC_POSTGIS_DB,
+                   :OYNC_STYLE_FILE]
 
   not_found_vars = required_vars - Object.constants
   if not_found_vars.size > 1
@@ -129,28 +129,28 @@ begin
   end
 
   # make sure sync dir exists
-  FileUtils.mkdir_p(SYNC_LOAD_SYNC_DIR)
+  FileUtils.mkdir_p(OYNC_LOAD_DIR)
   # Prevent multiple simultaneous runs
-  lock_file = File.join(SYNC_LOAD_SYNC_DIR, "sync_load.lock") 
+  lock_file = File.join(OYNC_LOAD_DIR, "oync_load.lock") 
   if File.exists?(lock_file)
-    puts "sync_load.lock exists...assuming already running"
+    puts "oync_load.lock exists...assuming already running"
     exit 1
   else
     File.open(lock_file, "w") {}
   end
 
-  sync_load = SyncLoad.new(SYNC_LOAD_API_URL, 
-                           SYNC_LOAD_SYNC_DIR, 
-                           SYNC_LOAD_POSTGIS_DB, 
-                           SYNC_LOAD_STYLE_FILE)
+  oync_load = OyncLoad.new(OYNC_OSM_API_URL, 
+                           OYNC_LOAD_DIR, 
+                           OYNC_POSTGIS_DB, 
+                           OYNC_STYLE_FILE)
 
   if options[:get_changesets]
-    last_cs_ts = sync_load.get_changesets(options[:get_changesets])
+    last_cs_ts = oync_load.get_changesets(options[:get_changesets])
     puts last_cs_ts.to_s
   end
 
   if options[:update_postgis]
-    sync_load.update_postgis_with_changesets
+    oync_load.update_postgis_with_changesets
   end
 
   File.delete(lock_file)

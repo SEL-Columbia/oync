@@ -16,7 +16,7 @@ which osm2pgsql > /dev/null || { echo "Failed to find osm2pgsql in path"; exit 1
 # is added multiple times
 if [ ! -e $OYNC_DIR/oync_load.ts ]
 then 
-  psql -d osm_grid -At -c "select max(osm_timestamp) from planet_osm_point;" > $OYNC_DIR/oync_load.ts
+  psql -d osm -At -c "select max(osm_timestamp) from planet_osm_point;" > $OYNC_DIR/oync_load.ts
   # if results from above don't look right (i.e. table missing or no max timestamp)
   # go back to jan 1 1970 (i.e. get all changesets)
   if ! grep -Eq '[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.*' $OYNC_DIR/oync_load.ts
@@ -42,5 +42,5 @@ cp $OYNC_DIR/oync_load.ts.tmp $OYNC_DIR/oync_load.ts
 
 # perform the update
 echo "`date +%Y-%m-%dT%H:%M:%s` updating postgis with changesets..."
-ruby oync_load.rb -u -c oync_load_cfg.rb >> $OYNC_DIR/oync_load.log 2>&1
+ruby oync_load.rb -u -c oync_cfg.rb >> $OYNC_DIR/oync_load.log 2>&1
 [[ $? = 0 ]] || { echo "Failed to sync postgis db.  Check $OYNC_DIR/oync_load.log"; exit 1; }

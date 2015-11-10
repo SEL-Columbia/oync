@@ -1,4 +1,6 @@
-OYNC_OSM_API_URL="ibadan.gridmaps.org" # change me to point to osm server url
-OYNC_LOAD_DIR="/oync.d/load"
-OYNC_POSTGIS_DB="osm_grid"
-OYNC_STYLE_FILE="/oync.d/oync.style"
+OYNC_OSM_API_URL=ENV["OYNC_OSM_API_URL"] # change me to point to osm server url
+OYNC_LOAD_DIR=ENV["OYNC_LOAD_DIR"]
+OYNC_DB=ENV["OYNC_DB"]
+OYNC_DB_HOST=ENV["OYNC_DB_HOST"]
+OYNC_DB_USER=ENV["OYNC_DB_USER"]
+OYNC_STYLE_FILE="/oync/oync.style"

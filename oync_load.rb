@@ -11,10 +11,12 @@ class OyncLoad
   CHANGESET_DIR = "changesets"
   CHANGESET_ID_FILE = "changeset_ids.xml"
   
-  def initialize(api_url, oync_dir, postgis_db, osm_pgsql_style_file)
+  def initialize(api_url, oync_dir, postgis_db, postgis_host, postgis_user, osm_pgsql_style_file)
     @api_url = api_url
     @oync_dir = oync_dir
     @postgis_db = postgis_db
+    @postgis_host = postgis_host
+    @postgis_user = postgis_user
     @osm_pgsql_style_file = osm_pgsql_style_file
     @changeset_dir = File.join(@oync_dir, CHANGESET_DIR)
     @changeset_id_file = File.join(@oync_dir, CHANGESET_ID_FILE)
@@ -61,7 +63,9 @@ class OyncLoad
     # run osm2pgsql for each changeset file
     Dir[File.join(@changeset_dir, "*.osc")].each do |id_file|
       puts "appending #{id_file}"
-      osm2pgsql_cmd = "osm2pgsql --database #{@postgis_db} \
+      osm2pgsql_cmd = "osm2pgsql --host #{@postgis_host} \ 
+                                 --username #{@postgis_user} \
+                                 --database #{@postgis_db} \
                                  --style #{@osm_pgsql_style_file} \
                                  --slim #{id_file} \
                                  --cache-strategy sparse \
@@ -120,6 +124,8 @@ begin
   required_vars = [:OYNC_OSM_API_URL, 
                    :OYNC_LOAD_DIR, 
                    :OYNC_POSTGIS_DB,
+                   :OYNC_POSTGIS_HOST,
+                   :OYNC_POSTGIS_USER,
                    :OYNC_STYLE_FILE]
 
   not_found_vars = required_vars - Object.constants
@@ -142,6 +148,8 @@ begin
   oync_load = OyncLoad.new(OYNC_OSM_API_URL, 
                            OYNC_LOAD_DIR, 
                            OYNC_POSTGIS_DB, 
+                           OYNC_POSTGIS_HOST,
+                           OYNC_POSTGIS_USER,
                            OYNC_STYLE_FILE)
 
   if options[:get_changesets]

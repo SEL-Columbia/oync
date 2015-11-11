@@ -1,2 +1,2 @@
 # Sync postgis db every minute
-* * * * * export PATH=$PATH:/usr/local/bin; cd /oync; . oync.env; ./oync.sh >> $OYNC_DIR/cron.log 2>&1
+* * * * * export PATH=$PATH:/usr/local/bin; cd /oync; ./oync.sh >> cron.log 2>&1

@@ -2,17 +2,18 @@
 # start postgis, setup db (if not already done) and kick off oync via cron
 
 # Map docker-compose defined env variables to internal env variables
-# and write to env file for subsequent processes to read (i.e. cron jobs) 
-cat - > /oync/oync.env <<EOF
-export OYNC_OSM_API_URL="$OSM_API_URL"
+# and write to env file for subsequent processes to read (i.e. ruby script run via cron) 
+cat - > /oync/.env <<EOF
+export OYNC_OSM_API_URL="$OYNC_OSM_API_URL"
 export OYNC_DB_HOST="$DB_PORT_5432_TCP_ADDR"
 export OYNC_DB_USER=postgres
 export OYNC_DB="$DB_ENV_POSTGRES_DB"
 export OYNC_LOAD_DIR=/oync/load
+export OYNC_STYLE_FILE=/oync/oync.style
 EOF
 
 # source it
-. /oync/oync.env
+. /oync/.env
 
 # create empty tables via osm2pgsql
 while ! psql -d "$OYNC_DB" -h "$OYNC_DB_HOST" -U "$OYNC_DB_USER" -c '\d' > /dev/null;

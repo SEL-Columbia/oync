@@ -1,19 +1,21 @@
 #!/bin/bash
-# start postgis, setup db (if not already done) and kick off oync via cron
+# setup environment and kickoff oync
+# assumes running from /oync dir
 
-# Map docker-compose defined env variables to internal env variables
-# and write to env file for subsequent processes to read (i.e. ruby script run via cron) 
-cat - > /oync/.env <<EOF
+# standardize oync env variables
+# and write to env file for subsequent processes to read (i.e. ruby script) 
+cat - > .env <<EOF
 export OYNC_OSM_API_URL="$OYNC_OSM_API_URL"
 export OYNC_DB_HOST="$DB_PORT_5432_TCP_ADDR"
 export OYNC_DB_USER=postgres
 export OYNC_DB="$DB_ENV_POSTGRES_DB"
 export OYNC_LOAD_DIR=/oync/load
 export OYNC_STYLE_FILE=/oync/oync.style
+export OYNC_INTERVAL="${OYNC_INTERVAL:-10}"
 EOF
 
 # source it
-. /oync/.env
+. .env
 
 # create empty tables via osm2pgsql
 while ! psql -d "$OYNC_DB" -h "$OYNC_DB_HOST" -U "$OYNC_DB_USER" -c '\d' > /dev/null;
@@ -32,5 +34,8 @@ else
   osm2pgsql --host "$OYNC_DB_HOST" --database "$OYNC_DB" --username "$OYNC_DB_USER" --create --style /oync/oync.style --slim /oync/empty.osm --hstore-all --extra-attributes
 fi
 
-crontab /oync/oync.crt
-cron
+while true
+do
+    ./oync.sh >> polling.log 2>&1
+    sleep $OYNC_INTERVAL
+done

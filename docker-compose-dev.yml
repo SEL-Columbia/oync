@@ -1,7 +1,7 @@
 oync:
     image: "selcolumbia/oync"
     volumes:
-      - ./:/oync
+      - ./:/oync-src
     links:
       - "db:db"
     environment:

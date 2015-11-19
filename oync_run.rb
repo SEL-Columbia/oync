@@ -1,6 +1,6 @@
-require 'environment'
 require 'optparse'
-require 'oync_load'
+require_relative 'environment'
+require_relative 'oync_load'
 
 logger = Logger.new(STDOUT)
 
@@ -10,12 +10,16 @@ if __FILE__ == $0
     options = {}
 
     optparse = OptionParser.new do |opts|
-        opts.on('-g', '--get-changesets TIMESTAMP', 'get changesets since last sync') do |timestamp|
-            options[:get_changesets] = DateTime::parse(timestamp)
+        opts.on('-u', '--update-changeset-ids', 'sync up changeset ids from remote') do
+            options[:update_changeset_ids] = true
         end
 
-        opts.on('-u', '--update-postgis', 'update postgis with changesets') do 
-            options[:update_postgis] = true
+        opts.on('-r', '--retrieve-changesets', 'get all "NEW" changeset files from remote') do
+            options[:retrieve_changesets] = true
+        end
+
+        opts.on('-p', '--process-changesets', 'process all "RETRIEVED" changesets into postgis db') do
+            options[:process_changesets] = true
         end
 
         opts.on('-h', '--help', 'Display help') do
@@ -26,7 +30,7 @@ if __FILE__ == $0
 
     begin
         optparse.parse!
-        commands = [:get_changesets, :update_postgis]               
+        commands = [:update_changeset_ids, :retrieve_changesets, :process_changesets]               
         selected_commands = commands.select{ |param| options[param] }
         if selected_commands.size < 1
             logger.fatal("Need to select at least one command of: #{commands.join(', ')}")
@@ -34,9 +38,11 @@ if __FILE__ == $0
             exit 1
         end
 
-        # By including environment above, we have set ENV vars that we need
+        # NOTE:  By including environment above, we have set ENV vars that we need
+
         # make sure sync dir exists
         FileUtils.mkdir_p(ENV['OYNC_LOAD_DIR'])
+
         # Prevent multiple simultaneous runs
         lock_file = File.join(ENV['OYNC_LOAD_DIR'], "oync_load.lock") 
         if File.exists?(lock_file)
@@ -53,21 +59,26 @@ if __FILE__ == $0
                                  ENV['OYNC_DB_USER'],
                                  ENV['OYNC_STYLE_FILE'])
 
-        if options[:get_changesets]
-            last_cs_ts = oync_load.get_changesets(options[:get_changesets])
-            # write timestamp to stdout
-            puts last_cs_ts.to_s
+        if options[:update_changeset_ids]
+            oync_load.update_changeset_ids
         end
 
-        if options[:update_postgis]
-            oync_load.update_postgis_with_changesets
+        if options[:retrieve_changesets]
+            oync_load.retrieve_changesets
+        end
+
+        if options[:process_changesets]
+            oync_load.process_changesets
         end
 
         File.delete(lock_file)
 
-    rescue OptionParser::InvalidOption, OptionParser::MissingArgument      
+    rescue => e
+        if File.exists?(lock_file)
+            File.delete(lock_file)
+        end    
+ 
         logger.fatal($!.to_s)  # Friendly output when parsing fails
-        logger.fatal(optparse)
-        exit 1
+        raise e
     end 
 end

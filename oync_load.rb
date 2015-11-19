@@ -11,7 +11,6 @@ require_relative 'changeset'
 
 class OyncLoad
 
-    logger = Logger.new(STDOUT)
 
     CHANGESET_DIR = "changesets"
     CHANGESET_ID_FILE = "changeset_ids.xml"
@@ -25,6 +24,13 @@ class OyncLoad
     STATUS_NOT_FOUND  = "NOT_FOUND"
     STATUS_FAILED     = "FAILED"
 
+    def log
+        if @logger.nil?
+            @logger = Logger.new STDOUT
+        end
+        @logger
+    end
+
     def initialize(api_url, oync_dir, postgis_db, postgis_host, postgis_user, osm_pgsql_style_file)
         @api_url = api_url
         @oync_dir = oync_dir
@@ -37,12 +43,12 @@ class OyncLoad
     end
 
     # update the status of all changeset ids
-    def update_local_changeset_ids()
+    def update_changeset_ids()
         
         # get the last cs id we've synced and compare with last cs id 
         # from server, filling in the middle
         last_cs_id = Changeset.maximum(:id)
-        last_cs_ts = Changeset.maxmimum(:timestamp)
+        last_cs_ts = Changeset.maximum(:closed_at)
 
         # if changesets are not populated, its possible that a planet
         # file has been loaded, in which case we take the last cs id
@@ -50,10 +56,14 @@ class OyncLoad
         if not last_cs_id 
             sql = "select max(tags->'osm_changeset') as max_cs, max(tags->'osm_timestamp') as max_ts from planet_osm_point"
             records = ActiveRecord::Base.connection.execute(sql)
-            if records.count == 1
+            if records.count == 1 and records[0]['max_cs'] and records[0]['max_ts']
                 last_cs_id = records[0]['max_cs'].to_i
                 last_cs_ts = DateTime::parse(records[0]['max_ts'])
                 # populate all missing changesets
+                # we set closed_at for all changesets to max of all existing changesets
+                # because we only really need the max to determine which changesets 
+                # we'll need in the future
+                log.info("populating missing changesets 0 to #{last_cs_id}")
                 (0..last_cs_id).each do |cs_id|
                     Changeset.create(id: cs_id, closed_at: last_cs_ts, status: STATUS_PROCESSED)
                 end
@@ -68,15 +78,39 @@ class OyncLoad
         # add all changesets that we haven't seen as "NEW" to our table
         # ASSUMPTION:  changeset ids are sequential
         if last_cs_id < remote_last_cs_id
-            (last_cs_id..remote_last_cs_id).each do |cs_id|
-                Changeset.create(id: cs_id, status: STATUS_NEW)
+            ((last_cs_id + 1)..remote_last_cs_id).each do |cs_id|
+                cs = get_remote_changeset(cs_id)
+                cs.save
+            end
         elsif remote_last_cs_id == NO_CHANGESETS
-            logger.warn("No changesets in osm db at host #{@api_url}")
+            log.warn("No changesets in osm db at host #{@api_url}")
         elsif last_cs_id > remote_last_cs_id
-            logger.error("Local changeset ids ( #{last_cs_id} ) have moved past remote changeset id ( #{remote_last_cs_id} ) from host #{@api_url}")
-        elseif last_cs_id == remote_last_cs_id
-            logger.info("No new changesets")
+            log.error("Local changeset ids ( #{last_cs_id} ) have moved past remote changeset id ( #{remote_last_cs_id} ) from host #{@api_url}")
+        elsif last_cs_id == remote_last_cs_id
+            log.info("No new changesets")
         end
+    end
+
+    # get new changeset object data from remote
+    def get_remote_changeset(cs_id)
+
+        cs = Changeset.new(id: cs_id)
+
+        # get data from remote
+        changeset_uri = URI(@api_url + "/api/0.6/changeset/#{cs_id}")
+        response = Net::HTTP.get_response(changeset_uri)
+        if response.is_a?(Net::HTTPSuccess)
+            doc = Nokogiri::XML(response.body)
+            if doc.at('/osm/changeset/@closed_at')
+                cs.closed_at = DateTime::parse(doc.at('/osm/changeset/@closed_at').to_s)
+                cs.status = STATUS_NEW
+            else
+                cs.status = STATUS_NOT_CLOSED
+            end
+        else
+            cs.status = STATUS_NOT_FOUND
+        end
+        cs
     end
 
     # get the max changeset id/timestamp from remote system
@@ -106,7 +140,7 @@ class OyncLoad
         # make sure changeset dir has been created
         FileUtils.mkdir_p(@changeset_dir)
         Changeset.where("status = \'#{STATUS_NEW}\'").each do |cs|
-            changeset_uri = @api_url + "/api/0.6/changeset/#{cs.id}/download"
+            changeset_uri = URI(@api_url + "/api/0.6/changeset/#{cs.id}/download")
             response = Net::HTTP.get_response(changeset_uri)
             if response.is_a?(Net::HTTPSuccess)
                 osc_file = File.join(@changeset_dir, cs.id.to_s) + ".osc"
@@ -114,7 +148,7 @@ class OyncLoad
                 cs.file_location = osc_file
                 cs.status = STATUS_RETRIEVED
             else
-                logger.error("failed to retrieve changeset (id #{cs.id}) from #{changeset_uri}")
+                log.error("failed to retrieve changeset (id #{cs.id}) from #{changeset_uri}")
                 cs.status = STATUS_NOT_FOUND # other cases to handle?
             end
             cs.save
@@ -125,7 +159,7 @@ class OyncLoad
     def process_changesets
         Changeset.where("status = \'#{STATUS_RETRIEVED}\'").each do |cs|
             
-            logger.info("processing #{cs.file_location}")
+            log.info("processing #{cs.file_location}")
             osm2pgsql_cmd = "osm2pgsql --host #{@postgis_host}"\
                             " --username #{@postgis_user}"\
                             " --database #{@postgis_db}"\
@@ -133,16 +167,16 @@ class OyncLoad
                             " --slim #{cs.file_location}"\
                             " --cache-strategy sparse"\
                             " --hstore-all --extra-attributes --append"
-            logger.info("running #{osm2pgsql_cmd}")
+            log.info("running #{osm2pgsql_cmd}")
             system(osm2pgsql_cmd, :err=>STDOUT, :out=>STDOUT)
             if $?.success?
                 bak_file = cs.file_location.sub("osc", "bak")
                 FileUtils.mv cs.file_location, bak_file
-                logger.info("moved #{cs.file_location} to #{bak_file}")
+                log.info("moved #{cs.file_location} to #{bak_file}")
                 cs.file_location = bak_file
                 cs.status = STATUS_PROCESSED
             else 
-                logger.error("failed #{id_file} to #{bak_file}")
+                log.error("failed processing #{cs.file_location} to #{bak_file}")
                 cs.status = STATUS_FAILED
             end
             cs.save

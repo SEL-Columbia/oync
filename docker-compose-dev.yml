@@ -5,7 +5,7 @@ oync:
     links:
       - "db:db"
     environment:
-        OYNC_OSM_API_URL: 'ibadan.gridmaps.org'
+        OYNC_OSM_API_URL: 'http://ibadan.gridmaps.org'
 db:
     image: "mdillon/postgis:9.4"
     environment:

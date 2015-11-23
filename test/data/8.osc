@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osmChange version="0.6" generator="OpenStreetMap server" copyright="Modilabs" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+  <create>
+    <node id="20" changeset="8" timestamp="2015-09-16T13:08:28Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3215255" lon="3.8744636">
+      <tag k="name" v="Ajimobi Market"/>
+      <tag k="operator" v="Ibadan"/>
+      <tag k="power" v="transformer"/>
+      <tag k="rating" v="200"/>
+      <tag k="unit" v="Akanran"/>
+      <tag k="voltage-high" v="11"/>
+      <tag k="voltage-low" v="0.414"/>
+    </node>
+  </create>
+  <create>
+    <node id="21" changeset="8" timestamp="2015-09-16T13:08:29Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3236522" lon="3.875426">
+      <tag k="name" v="Asalam"/>
+      <tag k="operator" v="Ibadan"/>
+      <tag k="power" v="transformer"/>
+      <tag k="rating" v="100"/>
+      <tag k="unit" v="Molete"/>
+      <tag k="voltage-high" v="11"/>
+      <tag k="voltage-low" v="0.415"/>
+    </node>
+  </create>
+  <create>
+    <node id="22" changeset="8" timestamp="2015-09-16T13:08:30Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3323976" lon="3.8751366">
+      <tag k="frequency" v="50"/>
+      <tag k="location" v="outdoor"/>
+      <tag k="name" v="INTERCHANGE"/>
+      <tag k="operator" v="IBEDC"/>
+      <tag k="power" v="substation"/>
+      <tag k="substation" v="injection"/>
+      <tag k="unit" v="MOLETE"/>
+      <tag k="voltage" v="33/11"/>
+    </node>
+  </create>
+  <create>
+    <node id="23" changeset="8" timestamp="2015-09-16T13:08:30Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3260581" lon="3.8759339">
+      <tag k="name" v="Mobil"/>
+      <tag k="operator" v="Ibadan"/>
+      <tag k="power" v="transformer"/>
+      <tag k="rating" v="200"/>
+      <tag k="unit" v="Molete"/>
+      <tag k="voltage-high" v="11"/>
+      <tag k="voltage-low" v="0.415"/>
+    </node>
+  </create>
+  <create>
+    <node id="24" changeset="8" timestamp="2015-09-16T13:08:31Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3259479" lon="3.8759339">
+      <tag k="name" v="Resoco"/>
+      <tag k="operator" v="Ibadan"/>
+      <tag k="power" v="transformer"/>
+      <tag k="rating" v="300"/>
+      <tag k="unit" v="Molete"/>
+      <tag k="voltage-high" v="11"/>
+      <tag k="voltage-low" v="0.415"/>
+    </node>
+  </create>
+  <create>
+    <node id="25" changeset="8" timestamp="2015-09-16T13:08:32Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3221017" lon="3.8748317"/>
+  </create>
+  <create>
+    <node id="26" changeset="8" timestamp="2015-09-16T13:08:32Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3225157" lon="3.8750252">
+      <tag k="notes" v="1"/>
+      <tag k="power" v="T-Off"/>
+    </node>
+  </create>
+  <create>
+    <node id="27" changeset="8" timestamp="2015-09-16T13:08:33Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3225189" lon="3.8750252">
+      <tag k="notes" v="1"/>
+      <tag k="power" v="T-Off"/>
+      <tag k="todo" v="yes"/>
+    </node>
+  </create>
+  <create>
+    <node id="28" changeset="8" timestamp="2015-09-16T13:08:33Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3227177" lon="3.8751104"/>
+  </create>
+  <create>
+    <node id="29" changeset="8" timestamp="2015-09-16T13:08:34Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3246097" lon="3.8757494"/>
+  </create>
+  <create>
+    <node id="30" changeset="8" timestamp="2015-09-16T13:08:34Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.32574" lon="3.8759339"/>
+  </create>
+  <create>
+    <node id="31" changeset="8" timestamp="2015-09-16T13:08:35Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3265569" lon="3.8760133"/>
+  </create>
+  <create>
+    <node id="32" changeset="8" timestamp="2015-09-16T13:08:35Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3277748" lon="3.8759332"/>
+  </create>
+  <create>
+    <node id="33" changeset="8" timestamp="2015-09-16T13:08:36Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3282662" lon="3.8758362"/>
+  </create>
+  <create>
+    <node id="34" changeset="8" timestamp="2015-09-16T13:08:36Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3284752" lon="3.8758491"/>
+  </create>
+  <create>
+    <node id="35" changeset="8" timestamp="2015-09-16T13:08:37Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3296014" lon="3.8762318">
+      <tag k="notes" v="1"/>
+      <tag k="power" v="T-Off"/>
+      <tag k="todo" v="yes"/>
+    </node>
+  </create>
+  <create>
+    <node id="36" changeset="8" timestamp="2015-09-16T13:08:37Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3297773" lon="3.8763966"/>
+  </create>
+  <create>
+    <node id="37" changeset="8" timestamp="2015-09-16T13:08:38Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3300164" lon="3.8765176"/>
+  </create>
+  <create>
+    <node id="38" changeset="8" timestamp="2015-09-16T13:08:38Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.331159" lon="3.8768112"/>
+  </create>
+  <create>
+    <node id="39" changeset="8" timestamp="2015-09-16T13:08:39Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3312146" lon="3.8767863">
+      <tag k="notes" v="3"/>
+      <tag k="power" v="T-Off"/>
+      <tag k="todo" v="yes"/>
+    </node>
+  </create>
+  <create>
+    <node id="40" changeset="8" timestamp="2015-09-16T13:08:39Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3312531" lon="3.876769"/>
+  </create>
+  <create>
+    <node id="41" changeset="8" timestamp="2015-09-16T13:08:40Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3314706" lon="3.8764367"/>
+  </create>
+  <create>
+    <node id="42" changeset="8" timestamp="2015-09-16T13:08:40Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3321781" lon="3.8759143"/>
+  </create>
+  <create>
+    <node id="43" changeset="8" timestamp="2015-09-16T13:08:41Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3323725" lon="3.8751935"/>
+  </create>
+  <create>
+    <node id="44" changeset="8" timestamp="2015-09-16T13:08:41Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3323738" lon="3.8758488"/>
+  </create>
+  <create>
+    <node id="45" changeset="8" timestamp="2015-09-16T13:08:42Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.332398" lon="3.8757538">
+      <tag k="power" v="isolator"/>
+    </node>
+  </create>
+  <create>
+    <node id="46" changeset="8" timestamp="2015-09-16T13:08:42Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3326029" lon="3.8755151"/>
+  </create>
+  <create>
+    <node id="47" changeset="8" timestamp="2015-09-16T13:08:43Z" version="1" visible="true" user="SSherpa" uid="20" lat="7.3326327" lon="3.8755248"/>
+  </create>
+  <create>
+    <way id="3" changeset="8" timestamp="2015-09-16T13:08:43Z" version="1" visible="true" user="SSherpa" uid="20">
+      <nd ref="22"/>
+      <nd ref="43"/>
+      <nd ref="47"/>
+      <nd ref="46"/>
+      <nd ref="45"/>
+      <nd ref="44"/>
+      <nd ref="42"/>
+      <nd ref="41"/>
+      <nd ref="40"/>
+      <nd ref="39"/>
+      <nd ref="38"/>
+      <nd ref="37"/>
+      <nd ref="36"/>
+      <nd ref="35"/>
+      <nd ref="34"/>
+      <nd ref="33"/>
+      <nd ref="32"/>
+      <nd ref="31"/>
+      <nd ref="23"/>
+      <nd ref="24"/>
+      <nd ref="30"/>
+      <nd ref="29"/>
+      <nd ref="21"/>
+      <nd ref="28"/>
+      <nd ref="26"/>
+      <nd ref="27"/>
+      <nd ref="25"/>
+      <nd ref="20"/>
+      <tag k="cables" v="fivefold"/>
+      <tag k="name" v="Podo"/>
+      <tag k="operator" v="Ibadan"/>
+      <tag k="power" v="line"/>
+      <tag k="power:gauge" v="150"/>
+      <tag k="unit" v="Molete"/>
+      <tag k="voltage" v="11"/>
+    </way>
+  </create>
+</osmChange>

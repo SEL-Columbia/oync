@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="OpenStreetMap server" copyright="Modilabs" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+  <changeset id="10" user="carbz" uid="21" created_at="2015-09-16T14:10:46Z" closed_at="2015-09-16T14:10:47Z" open="false" min_lat="12.1478234" min_lon="6.8447148" max_lat="12.7929458" max_lon="7.2708167" comments_count="0">
+    <tag k="source" v="by Jonatha 'carbz' from NYC"/>
+    <tag k="created_by" v="JOSM/1.5 (7995 en)"/>
+    <tag k="comment" v="test upload"/>
+  </changeset>
+  <changeset id="1" user="SSherpa" uid="20" created_at="2015-09-16T07:37:04Z" closed_at="2015-09-16T08:40:42Z" open="false" comments_count="0">
+    <tag k="source" v="IBEDC-Molete_BU-Challenge_SU_AJimoh_SSherpa"/>
+    <tag k="created_by" v="JOSM/1.5 (8677 en)"/>
+    <tag k="comment" v="Edited  Odo_Ona  feeder with and Sister of Charity Tee-Off joined"/>
+  </changeset>
+  <changeset id="2" user="pent05" uid="6" created_at="2015-09-16T07:39:57Z" closed_at="2015-09-16T08:39:57Z" open="false" comments_count="0">
+    <tag k="source" v="IBEDC_Ibadan Region_Molete B/H_Tijani"/>
+    <tag k="created_by" v="JOSM/1.5 (8677 en)"/>
+    <tag k="comment" v="Edited Ajinde and Odo-Ona 11KV Feeder"/>
+  </changeset>
+  <changeset id="3" user="sel_osm" uid="2" created_at="2015-09-16T11:45:51Z" closed_at="2015-09-16T11:45:51Z" open="false" min_lat="40.7648153" min_lon="-74.0565404" max_lat="40.7648153" max_lon="-74.0495484" comments_count="0">
+    <tag k="created_by" v="JOSM/1.5 (8677 en)"/>
+    <tag k="comment" v="test"/>
+  </changeset>
+  <changeset id="4" user="sel_osm" uid="2" created_at="2015-09-16T11:50:30Z" closed_at="2015-09-16T11:50:31Z" open="false" min_lat="40.7568712" min_lon="-74.0580875" max_lat="40.7657843" max_lon="-74.0183073" comments_count="0">
+    <tag k="created_by" v="JOSM/1.5 (8677 en)"/>
+    <tag k="comment" v="testing 2"/>
+  </changeset>
+  <changeset id="5" user="pent05" uid="6" created_at="2015-09-16T12:03:48Z" closed_at="2015-09-16T13:03:48Z" open="false" comments_count="0">
+    <tag k="source" v="IBEDC_Ibadan Region_Molete B/H_Tijani"/>
+    <tag k="created_by" v="JOSM/1.5 (8677 en)"/>
+    <tag k="comment" v="Edited Ajinde and Odo-Ona 11KV Feeder"/>
+  </changeset>
+  <changeset id="6" user="sel_osm" uid="2" created_at="2015-09-16T12:08:57Z" closed_at="2015-09-16T12:08:57Z" open="false" min_lat="40.7550759" min_lon="-74.0280439" max_lat="40.7568712" max_lon="-74.0205388" comments_count="0">
+    <tag k="created_by" v="JOSM/1.5 (8677 en)"/>
+    <tag k="comment" v="testing 3"/>
+  </changeset>
+  <changeset id="7" user="naigege" uid="22" created_at="2015-09-16T12:41:32Z" closed_at="2015-09-16T12:41:34Z" open="false" min_lat="7.3633995" min_lon="3.8681293" max_lat="7.3666258" max_lon="3.8715257" comments_count="0">
+    <tag k="created_by" v="JOSM/1.5 (8339 en)"/>
+    <tag k="comment" v="Aanfani11kVFeeder"/>
+  </changeset>
+  <changeset id="8" user="SSherpa" uid="20" created_at="2015-09-16T13:08:28Z" closed_at="2015-09-16T13:08:44Z" open="false" min_lat="7.3215255" min_lon="3.8744636" max_lat="7.3337411" max_lon="3.8770237" comments_count="0">
+    <tag k="source" v="IBEDC-Ibadan_region_Molete_BU-Challenge_SU_Engr.Boyenle_Habeeb"/>
+    <tag k="created_by" v="JOSM/1.5 (8677 en)"/>
+    <tag k="comment" v="Edited PODO  feeder from interchange injection substation"/>
+  </changeset>
+  <changeset id="9" user="pent05" uid="6" created_at="2015-09-16T14:04:16Z" closed_at="2015-09-16T15:04:16Z" open="false" comments_count="0">
+    <tag k="source" v="IBEDC_Ibadan Region_Molete B/H_Tijani"/>
+    <tag k="created_by" v="JOSM/1.5 (8677 en)"/>
+    <tag k="comment" v="Edited Ajinde and Odo-Ona 11KV Feeder"/>
+  </changeset>
+</osm>

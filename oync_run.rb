@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require 'optparse'
 require_relative 'environment'
 require_relative 'oync_load'

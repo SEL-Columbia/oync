@@ -1,0 +1,14 @@
+{
+  "name": "test-server",
+  "version": "0.0.1",
+  "description": "test data server for changesets",
+  "main": "test-server.js",
+  "scripts": {
+    "test": "node test-server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}

@@ -1,5 +1,13 @@
-Data in this directory represents changesets in a test server.
+# Test OYNC
 
-<changeset_id>.osc :  a changeset data file (returned for api/0.6/changeset/:id/download calls)
-<changeset_id>.cs  :  a changeset summary file (returned for api/0.6/changeset/:id calls)
-changeset.all      :  all changesets (returned for api/0.6/changesets/* calls)
+Scripts and data for testing oync.
+
+Install requirements and start mock test server (node express app):
+```
+# (prereq) install node on system
+npm install express
+node test-server.js
+```
+
+Run tests:
+# TODO 

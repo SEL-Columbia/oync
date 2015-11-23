@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osmChange version="0.6" generator="OpenStreetMap server" copyright="Modilabs" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+  <modify>
+    <node id="3" changeset="6" timestamp="2015-09-16T12:08:57Z" version="2" visible="true" user="sel_osm" uid="2" lat="40.7550759" lon="-74.0280439"/>
+  </modify>
+</osmChange>

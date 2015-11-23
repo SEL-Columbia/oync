@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osmChange version="0.6" generator="OpenStreetMap server" copyright="Modilabs" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+  <create>
+    <node id="6" changeset="7" timestamp="2015-09-16T12:41:32Z" version="1" visible="true" user="naigege" uid="22" lat="7.3633995" lon="3.8681293"/>
+  </create>
+  <create>
+    <node id="7" changeset="7" timestamp="2015-09-16T12:41:32Z" version="1" visible="true" user="naigege" uid="22" lat="7.3637044" lon="3.8685112">
+      <tag k="notes" v="1"/>
+      <tag k="power" v="TEE-OFF"/>
+    </node>
+  </create>
+  <create>
+    <node id="8" changeset="7" timestamp="2015-09-16T12:41:32Z" version="1" visible="true" user="naigege" uid="22" lat="7.3642015" lon="3.8689126"/>
+  </create>
+  <create>
+    <node id="9" changeset="7" timestamp="2015-09-16T12:41:32Z" version="1" visible="true" user="naigege" uid="22" lat="7.3645096" lon="3.8692021"/>
+  </create>
+  <create>
+    <node id="10" changeset="7" timestamp="2015-09-16T12:41:32Z" version="1" visible="true" user="naigege" uid="22" lat="7.3648151" lon="3.8694891"/>
+  </create>
+  <create>
+    <node id="11" changeset="7" timestamp="2015-09-16T12:41:32Z" version="1" visible="true" user="naigege" uid="22" lat="7.3650426" lon="3.8697604">
+      <tag k="notes" v="1"/>
+      <tag k="power" v="TEE-OFF"/>
+    </node>
+  </create>
+  <create>
+    <node id="12" changeset="7" timestamp="2015-09-16T12:41:33Z" version="1" visible="true" user="naigege" uid="22" lat="7.3653842" lon="3.8700504">
+      <tag k="notes" v="1"/>
+      <tag k="power" v="TEE-OFF"/>
+    </node>
+  </create>
+  <create>
+    <node id="13" changeset="7" timestamp="2015-09-16T12:41:33Z" version="1" visible="true" user="naigege" uid="22" lat="7.3656425" lon="3.8702744"/>
+  </create>
+  <create>
+    <node id="14" changeset="7" timestamp="2015-09-16T12:41:33Z" version="1" visible="true" user="naigege" uid="22" lat="7.365744" lon="3.8702161"/>
+  </create>
+  <create>
+    <node id="15" changeset="7" timestamp="2015-09-16T12:41:33Z" version="1" visible="true" user="naigege" uid="22" lat="7.3660228" lon="3.8712903"/>
+  </create>
+  <create>
+    <node id="16" changeset="7" timestamp="2015-09-16T12:41:33Z" version="1" visible="true" user="naigege" uid="22" lat="7.3660517" lon="3.8713016">
+      <tag k="power" v="substation"/>
+      <tag k="substation" v="injection"/>
+    </node>
+  </create>
+  <create>
+    <node id="17" changeset="7" timestamp="2015-09-16T12:41:33Z" version="1" visible="true" user="naigege" uid="22" lat="7.3660647" lon="3.8712279"/>
+  </create>
+  <create>
+    <node id="18" changeset="7" timestamp="2015-09-16T12:41:33Z" version="1" visible="true" user="naigege" uid="22" lat="7.3663389" lon="3.8707535"/>
+  </create>
+  <create>
+    <node id="19" changeset="7" timestamp="2015-09-16T12:41:33Z" version="1" visible="true" user="naigege" uid="22" lat="7.3664101" lon="3.870824"/>
+  </create>
+  <create>
+    <way id="2" changeset="7" timestamp="2015-09-16T12:41:33Z" version="1" visible="true" user="naigege" uid="22">
+      <nd ref="16"/>
+      <nd ref="15"/>
+      <nd ref="17"/>
+      <nd ref="19"/>
+      <nd ref="18"/>
+      <nd ref="14"/>
+      <nd ref="13"/>
+      <nd ref="12"/>
+      <nd ref="11"/>
+      <nd ref="10"/>
+      <nd ref="9"/>
+      <nd ref="8"/>
+      <nd ref="7"/>
+      <nd ref="6"/>
+      <tag k="name" v="Aanfani"/>
+      <tag k="operator" v="IBEDC"/>
+      <tag k="power" v="line"/>
+      <tag k="power:gauge" v="150"/>
+      <tag k="voltage" v="11"/>
+    </way>
+  </create>
+</osmChange>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osmChange version="0.6" generator="OpenStreetMap server" copyright="Modilabs" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+  <create>
+    <node id="48" changeset="10" timestamp="2015-09-16T14:10:47Z" version="1" visible="true" user="carbz" uid="21" lat="12.1478234" lon="7.2708167"/>
+  </create>
+  <create>
+    <node id="49" changeset="10" timestamp="2015-09-16T14:10:47Z" version="1" visible="true" user="carbz" uid="21" lat="12.6398473" lon="6.9979436"/>
+  </create>
+  <create>
+    <node id="50" changeset="10" timestamp="2015-09-16T14:10:47Z" version="1" visible="true" user="carbz" uid="21" lat="12.673981" lon="7.1728622"/>
+  </create>
+  <create>
+    <node id="51" changeset="10" timestamp="2015-09-16T14:10:47Z" version="1" visible="true" user="carbz" uid="21" lat="12.7012845" lon="6.8720022"/>
+  </create>
+  <create>
+    <node id="52" changeset="10" timestamp="2015-09-16T14:10:47Z" version="1" visible="true" user="carbz" uid="21" lat="12.7354099" lon="7.1378785"/>
+  </create>
+  <create>
+    <node id="53" changeset="10" timestamp="2015-09-16T14:10:47Z" version="1" visible="true" user="carbz" uid="21" lat="12.7558829" lon="7.0119371"/>
+  </create>
+  <create>
+    <way id="4" changeset="10" timestamp="2015-09-16T14:10:47Z" version="1" visible="true" user="carbz" uid="21">
+      <nd ref="49"/>
+      <nd ref="51"/>
+      <nd ref="53"/>
+      <nd ref="52"/>
+      <nd ref="50"/>
+      <nd ref="48"/>
+    </way>
+  </create>
+</osmChange>

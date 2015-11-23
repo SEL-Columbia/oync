@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osmChange version="0.6" generator="OpenStreetMap server" copyright="Modilabs" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+  <create>
+    <node id="3" changeset="4" timestamp="2015-09-16T11:50:30Z" version="1" visible="true" user="sel_osm" uid="2" lat="40.7568712" lon="-74.0205388"/>
+  </create>
+  <create>
+    <node id="4" changeset="4" timestamp="2015-09-16T11:50:30Z" version="1" visible="true" user="sel_osm" uid="2" lat="40.7626181" lon="-74.0183073"/>
+  </create>
+  <create>
+    <node id="5" changeset="4" timestamp="2015-09-16T11:50:31Z" version="1" visible="true" user="sel_osm" uid="2" lat="40.7652097" lon="-74.0335559"/>
+  </create>
+  <modify>
+    <way id="1" changeset="4" timestamp="2015-09-16T11:50:31Z" version="2" visible="true" user="sel_osm" uid="2">
+      <nd ref="2"/>
+      <nd ref="1"/>
+      <nd ref="5"/>
+      <nd ref="4"/>
+      <nd ref="3"/>
+      <tag k="frequency" v="1.5"/>
+      <tag k="power" v="line"/>
+      <tag k="voltage" v="240"/>
+    </way>
+  </modify>
+  <modify>
+    <node id="1" changeset="4" timestamp="2015-09-16T11:50:31Z" version="2" visible="true" user="sel_osm" uid="2" lat="40.7598574" lon="-74.0360849"/>
+  </modify>
+</osmChange>

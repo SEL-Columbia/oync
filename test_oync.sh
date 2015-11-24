@@ -1,10 +1,9 @@
-#!/bin/bash -l
+#!/bin/bash
 
-# Source the config/env vars from the dotenv
-SRC_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-. $SRC_DIR/.env
+# source env vars
+. .env
 
-# Assumes this script is being run from the same dir as the sync_load.rb ruby script
+# Assumes this script is being run from the same dir as the oync_load.rb ruby script
 for var in OYNC_OSM_API_URL OYNC_DB_HOST OYNC_DB_USER OYNC_DB OYNC_LOAD_DIR; do
     if ! [ -n "${!var:-}" ]; then
         echo "$var is unset"
@@ -19,9 +18,9 @@ function oync_cleanup {
     psql -d $OYNC_DB -h $OYNC_DB_HOST -U $OYNC_DB_USER -f clear.sql
 }
 
-# start mock server
-node test/test-server.js
+# kill all bg jobs on exit
+trap 'kill -9 $(jobs -p)' EXIT
 
 oync_cleanup
-
-./test/test_process_3_retreive_rest.sh || exit 1
+node test/test-server.js &
+./test/test_process_3_retrieve_rest.sh || exit 1

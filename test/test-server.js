@@ -1,9 +1,10 @@
 // simple test server to mock serving changesets from a directory
 var express = require('express');
+var path = require('path');
 var app = express();
 
 // read config
-var config = require('./env.json');
+var config = require(path.resolve(__dirname, 'env.json'));
 var DATA_DIR = config['data_dir'];
 
 // all changesets (ignore query params for now)

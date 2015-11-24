@@ -29,7 +29,12 @@ RUN apt-get update && \
         libproj-dev \
         lua5.2 \
         liblua5.2-dev \
-        postgresql
+        postgresql \
+        nodejs \
+        npm
+
+# node install step for testing server
+RUN ln -s /usr/bin/nodejs /usr/bin/node
 
 # Add oync source required for setup
 RUN mkdir /oync

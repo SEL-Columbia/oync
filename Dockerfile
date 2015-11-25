@@ -48,11 +48,11 @@ RUN bash install-osm2pgsql.sh
 RUN bash install-oync.sh
 
 # add rest of source
-ADD oync_load.rb /oync/
-ADD oync.sh /oync/
-ADD run-oync.sh /oync/
+ADD bin /oync/bin
+ADD lib /oync/lib
+ADD test /oync/test
 ADD empty.osm /oync/
 ADD oync.style /oync/
 
 # run oync on startup
-CMD ["./run-oync.sh"]
+CMD ["./bin/run-oync.sh"]

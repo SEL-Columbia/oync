@@ -3,7 +3,7 @@
 # assumes running from /oync dir
 
 # write/source env vars
-./write-env.sh
+./bin/write-env.sh
 . .env
 
 # create empty tables via osm2pgsql

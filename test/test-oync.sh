@@ -1,6 +1,11 @@
 #!/bin/bash
 
-# source env vars
+# Source the config/env vars from the dotenv in working dir
+if [ ! -f .env ]; then
+  echo ".env not found in working dir"
+  exit 1
+fi
+
 . .env
 
 # Assumes this script is being run from the same dir as the oync_load.rb ruby script

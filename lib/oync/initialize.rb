@@ -2,9 +2,17 @@ require 'dotenv'
 require 'logger'
 require 'active_record'
 
-logger = Logger.new(STDOUT)
+# initialization for oync
+module Oync
+    def Oync.log
+        if @logger.nil?
+            @logger = Logger.new(STDOUT)
+        end
+        @logger
+    end
+end
 
-# load config from .env
+# load config ENV vars from .env
 Dotenv.load
 
 # check if nec vars are defined
@@ -17,7 +25,7 @@ required_vars = ['OYNC_OSM_API_URL',
 
 not_found_vars = required_vars - ENV.keys
 if not_found_vars.size > 1
-    logger.fatal("All variables need to be defined: #{required_vars.join(', ')}")
+    Oync.log.fatal("Variables need to be defined in .env file: #{required_vars.join(', ')}")
     exit 1
 end
 

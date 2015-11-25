@@ -1,8 +1,9 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
-require_relative 'environment'
-require_relative 'oync_load'
+require 'dotenv'
+require_relative '../lib/oync/initialize'
+require_relative '../lib/oync/oync_load'
 
 logger = Logger.new(STDOUT)
 
@@ -40,8 +41,6 @@ if __FILE__ == $0
             exit 1
         end
 
-        # NOTE:  By including environment above, we have set ENV vars that we need
-
         # make sure sync dir exists
         FileUtils.mkdir_p(ENV['OYNC_LOAD_DIR'])
 
@@ -54,12 +53,12 @@ if __FILE__ == $0
             File.open(lock_file, "w") {}
         end
         
-        oync_load = OyncLoad.new(ENV['OYNC_OSM_API_URL'], 
-                                 ENV['OYNC_LOAD_DIR'], 
-                                 ENV['OYNC_DB'], 
-                                 ENV['OYNC_DB_HOST'],
-                                 ENV['OYNC_DB_USER'],
-                                 ENV['OYNC_STYLE_FILE'])
+        oync_load = Oync::Load.new(ENV['OYNC_OSM_API_URL'], 
+                                   ENV['OYNC_LOAD_DIR'], 
+                                   ENV['OYNC_DB'], 
+                                   ENV['OYNC_DB_HOST'],
+                                   ENV['OYNC_DB_USER'],
+                                   ENV['OYNC_STYLE_FILE'])
 
         if options[:update_changeset_ids]
             oync_load.update_changeset_ids

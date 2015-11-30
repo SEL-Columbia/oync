@@ -1,19 +1,16 @@
 #!/bin/bash
 # assumes the following ENV vars
 printf "%s\n" "${OYNC_OSM_API_URL:?Need to set OYNC_OSM_API_URL}"
-printf "%s\n" "${OYNC_DIR:?Need to set OYNC_DIR}"
+printf "%s\n" "${OYNC_LOAD_DIR:?Need to set OYNC_LOAD_DIR}"
+printf "%s\n" "${OYNC_TEST_DATA_DIR:?Need to set OYNC_TEST_DATA_DIR}"
 printf "%s\n" "${OYNC_DB:?Need to set OYNC_DB}"
 printf "%s\n" "${OYNC_DB_HOST:?Need to set OYNC_DB_HOST}"
 printf "%s\n" "${OYNC_DB_USER:?Need to set OYNC_DB_USER}"
 
-OYNC_LOAD_DIR=$OYNC_DIR/load
-OYNC_TEST_DATA_DIR=$OYNC_DIR/test/data
-PATH=$PATH:$OYNC_DIR # so that oync_run can be found
-
 yell() { echo "$0: $*" >&2; }
 die() { yell "$*"; exit 1; }
 
-# create LOAD_DIR dir
+# create LOAD_DIR dir if not already
 mkdir -p $OYNC_LOAD_DIR/changesets
 
 # ensure no load data
@@ -34,25 +31,25 @@ do
 done
 
 echo "processing 1st 3"
-oync_run.rb -p || die  "Failed to process changesets.  Check $OYNC_LOAD_DIR/oync_load.log"
+./bin/oync_run.rb -p || die  "Failed to process changesets.  Check $OYNC_LOAD_DIR/oync_load.log"
 
 count=$(psql -d $OYNC_DB -h $OYNC_DB_HOST -U $OYNC_DB_USER -tc "select count(*) from changesets;" | sed 's/^[^0-9]*//')
 [[ $count -eq "3" ]] || die "Failed to process 3 changesets"
 
 echo "syncing the ids for the rest"
-oync_run.rb -u || die "Failed to sync changeset ids.  Check $OYNC_LOAD_DIR/oync_load.log"
+./bin/oync_run.rb -u || die "Failed to sync changeset ids.  Check $OYNC_LOAD_DIR/oync_load.log"
 
 count=$(psql -d $OYNC_DB -h $OYNC_DB_HOST -U $OYNC_DB_USER -tc "select count(*) from changesets;" | sed 's/^[^0-9]*//')
 [[ $count -eq "10" ]] || die "Failed to sync changeset ids"
 
 echo "retrieving the rest"
-oync_run.rb -r || die "Failed to process changesets.  Check $OYNC_LOAD_DIR/oync_load.log"
+./bin/oync_run.rb -r || die "Failed to process changesets.  Check $OYNC_LOAD_DIR/oync_load.log"
 count=$(psql -d $OYNC_DB -h $OYNC_DB_HOST -U $OYNC_DB_USER -tc "select count(*) from changesets where status='RETRIEVED';" | sed 's/^[^0-9]*//')
 [[ $count -eq "7" ]] || die "Failed to retrieved changesets"
 
 
 echo "processing the rest"
-oync_run.rb -p || die "Failed to process changesets.  Check $OYNC_LOAD_DIR/oync_load.log"
+./bin/oync_run.rb -p || die "Failed to process changesets.  Check $OYNC_LOAD_DIR/oync_load.log"
 count=$(psql -d $OYNC_DB -h $OYNC_DB_HOST -U $OYNC_DB_USER -tc "select count(*) from changesets where status='PROCESSED';" | sed 's/^[^0-9]*//')
 [[ $count -eq "10" ]] || die "Failed to process changesets"
 

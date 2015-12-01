@@ -53,6 +53,5 @@ ADD lib /oync/lib
 ADD test /oync/test
 ADD empty.osm /oync/
 ADD oync.style /oync/
-
-# run oync on startup
-CMD ["./bin/run-oync.sh"]
+ADD oync_schema.sql /oync/
+ADD clear.sql /oync/

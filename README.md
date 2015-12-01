@@ -1,4 +1,4 @@
-# OYNC (Osm sYNC)
+j OYNC (Osm sYNC)
 
 System for synchronizing an Openstreetmap server with a PostGIS database in real time.  
 A simple alternative to setting up the "minutely" file based synchronization infrastructure.
@@ -11,10 +11,16 @@ Complements lightweight OSM data gathering deployments by providing PostGIS acce
 
 ## Setup
 
-Checkout repo and run:
+Checkout repo, cd into it and run:
 
 ```
-docker-compose -f docker-compose.yml up 
+docker build -t selcolumbia/oync .
+docker-compose run test
+```
+
+To start up a dev instance pointing to your local source dir run
+```
+docker-compose run dev bash
 ```
 
 ## Customization

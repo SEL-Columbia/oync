@@ -23,9 +23,5 @@ function oync_cleanup {
     psql -d $OYNC_DB -h $OYNC_DB_HOST -U $OYNC_DB_USER -f clear.sql
 }
 
-# kill all bg jobs on exit
-trap 'kill -9 $(jobs -p)' EXIT
-
 oync_cleanup
-node test/test-server.js &
 ./test/test_process_3_retrieve_rest.sh || exit 1

@@ -10,3 +10,30 @@ db:
     image: "mdillon/postgis:9.4"
     environment:
         POSTGRES_DB: 'osm'
+
+dev:
+    image: "selcolumbia/oync"
+    volumes:
+      - ./:/oync-src
+    links:
+      - "db:db"
+    environment:
+        OYNC_OSM_API_URL: 'http://localhost:3000'
+
+test-server:
+    image: "selcolumbia/oync"
+    ports:
+      - "3000:3000"
+    command:  node test/test-server.js
+
+test:
+    image: "selcolumbia/oync"
+    links:
+      - "db:db"
+      - "test-server:test-server"
+    environment:
+        OYNC_OSM_API_URL: 'http://test-server:3000'
+        OYNC_TEST_DATA_DIR: '/oync/test/data'
+    command:  ./bin/run-oync-tests.sh
+
+

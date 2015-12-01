@@ -23,6 +23,9 @@ count=$(psql -d $OYNC_DB -h $OYNC_DB_HOST -U $OYNC_DB_USER -tc "select count(*) 
 count=$(psql -d $OYNC_DB -h $OYNC_DB_HOST -U $OYNC_DB_USER -tc "select count(*) from planet_osm_point;" | sed 's/^[^0-9]*//')
 [[ $count -eq "0" ]] || die "planet_osm_point table not empty"
 
+# ensure test api is up
+curl $OYNC_OSM_API_URL/api/0.6/changesets > /dev/null 2>&1 || die "$OYNC_OSM_API_URL is not available for tests"
+
 # process changesets 1..3
 for i in {1..3};
 do 

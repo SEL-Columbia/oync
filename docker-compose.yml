@@ -31,6 +31,9 @@ test:
     links:
       - "db:db"
       - "test-server:test-server"
+    # overwrite oync dir with local source for tests
+    volumes:
+      - ./:/oync
     environment:
         OYNC_OSM_API_URL: 'http://test-server:3000'
         OYNC_TEST_DATA_DIR: '/oync/test/data'

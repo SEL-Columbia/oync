@@ -1,4 +1,4 @@
-j OYNC (Osm sYNC)
+# OYNC (Osm sYNC)
 
 System for synchronizing an Openstreetmap server with a PostGIS database in real time.  
 A simple alternative to setting up the "minutely" file based synchronization infrastructure.

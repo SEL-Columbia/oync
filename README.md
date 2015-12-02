@@ -1,5 +1,7 @@
 # OYNC (Osm sYNC)
 
+[![Build Status](https://travis-ci.org/SEL-Columbia/oync.svg?branch=master)](https://travis-ci.org/SEL-Columbia/oync)
+
 System for synchronizing an Openstreetmap server with a PostGIS database in real time.  
 A simple alternative to setting up the "minutely" file based synchronization infrastructure.
 Complements lightweight OSM data gathering deployments by providing PostGIS access to the data (for simpler analysis, visualization, etc)

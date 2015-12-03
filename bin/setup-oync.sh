@@ -28,6 +28,6 @@ if psql -d  "$OYNC_DB" -h "$OYNC_DB_HOST" -U "$OYNC_DB_USER" -c '\d' | grep chan
 then
   echo "changesets table exists"
 else
-  echo "setting up changesets table"
+  echo "setting up changesets table..."
   psql -d "$OYNC_DB" -h "$OYNC_DB_HOST" -U "$OYNC_DB_USER" -f oync_schema.sql 
 fi

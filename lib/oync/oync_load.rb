@@ -115,7 +115,7 @@ module Oync
         def get_remote_max(last_cs_timestamp)
 
             changeset_uri = URI(@api_url + "/api/0.6/changesets?time=" + 
-                last_cs_timestamp.to_s)
+                last_cs_timestamp.strftime("%FT%T"))
             
             response = Net::HTTP.get_response(changeset_uri)
             if response.is_a?(Net::HTTPSuccess)

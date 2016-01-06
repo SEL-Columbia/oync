@@ -10,7 +10,7 @@ yell() { echo "$0: $*" >&2; }
 die() { yell "$*"; exit 1; }
 
 # wait for test-server to start
-NUM_TRIES=10
+NUM_TRIES=20
 cur_try=0
 echo "Checking test-server..."
 curl $OYNC_OSM_API_URL/api/0.6/changesets

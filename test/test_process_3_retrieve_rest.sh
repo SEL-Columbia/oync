@@ -30,7 +30,8 @@ curl $OYNC_OSM_API_URL/api/0.6/changesets > /dev/null 2>&1 || die "$OYNC_OSM_API
 for i in {1..3};
 do 
     cp $OYNC_TEST_DATA_DIR/$i.osc $OYNC_LOAD_DIR/changesets/$i.osc
-    psql -d $OYNC_DB -h $OYNC_DB_HOST -U $OYNC_DB_USER -c "insert into changesets (id, file_location, status) values ($i, '$OYNC_LOAD_DIR/changesets/$i.osc', 'RETRIEVED');"
+    closed_at=`sed -n 's/.*closed_at=\"\([^\"]*\)\".*/\1/p' $OYNC_TEST_DATA_DIR/$i.cs`
+    psql -d $OYNC_DB -h $OYNC_DB_HOST -U $OYNC_DB_USER -c "insert into changesets (id, file_location, closed_at, status) values ($i, '$OYNC_LOAD_DIR/changesets/$i.osc', '$closed_at', 'RETRIEVED');"
 done
 
 echo "processing 1st 3"

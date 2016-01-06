@@ -51,7 +51,7 @@ module Oync
             # if changesets are not populated, its possible that a planet
             # file has been loaded, in which case we take the last cs id
             # from the planet_osm_point table 
-            if not last_cs_id 
+            if not last_cs_id
                 sql = "select max(tags->'osm_changeset') as max_cs, max(tags->'osm_timestamp') as max_ts from planet_osm_point"
                 records = ActiveRecord::Base.connection.execute(sql)
                 if records.count == 1 and records[0]['max_cs'] and records[0]['max_ts']
@@ -74,7 +74,7 @@ module Oync
             remote_last_cs_id = get_remote_max(last_cs_ts)
 
             # add all changesets that we haven't seen as "NEW" to our table
-            # ASSUMPTION:  changeset ids are sequential
+            # ASSUMPTION:  changeset ids are issued sequentially upstream
             if last_cs_id < remote_last_cs_id
                 ((last_cs_id + 1)..remote_last_cs_id).each do |cs_id|
                     cs = get_remote_changeset(cs_id)

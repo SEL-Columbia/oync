@@ -37,3 +37,23 @@ Details [here](http://wiki.openstreetmap.org/wiki/Osm2pgsql#Import_style)
 - OYNC_OSM_API_URL environment variable:
 
 This variable defines which OSM instance to synchronize with.
+
+## Troubleshooting
+
+Oync is a lightweight sync tool and therefore is designed to fail fast when there are issues synchronizing with the OSM server.
+This prevents it from overloading the main OSM server.
+
+The first place to look for issues is in the changesets table. A query such as the following will list all changesets that haven't been processed
+(running via the docker db container named oynctilemill_db_1...YMMV):  
+
+```
+docker exec -ti oynctilemill_db_1 psql -U postgres -d osm -c "select * from changesets where status != 'PROCESSED';"
+```
+
+Any changesets not processed can be reattempted via resetting their status to 'NEW' via:  
+
+```
+docker exec -ti oynctilemill_db_1 psql -U postgres -d osm -c "update changesets set status='NEW' where status = 'NOT_CLOSED';"
+```
+
+You can also check the ```polling.log``` and ```load/oync_load.log``` log files within your main oync docker container for more detailed error messages.

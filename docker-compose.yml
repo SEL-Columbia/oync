@@ -3,7 +3,7 @@ oync:
     links:
       - "db:db"
     environment:
-        OYNC_OSM_API_URL: 'http://ibadan.gridmaps.org'
+        OYNC_OSM_API_URL: 'http://172.17.0.59'
     command:  ./bin/run-oync.sh
 
 db:
@@ -38,5 +38,3 @@ test:
         OYNC_OSM_API_URL: 'http://test-server:3000'
         OYNC_TEST_DATA_DIR: '/oync/test/data'
     command:  ./bin/run-oync-tests.sh
-
-

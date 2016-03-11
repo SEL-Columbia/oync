@@ -3,6 +3,9 @@ dist: trusty
 services:
   - docker
 
+# Note that we don't build image in here (takes way too long)
+# So we assume that image has been built/tested locally and
+# pushed to docker hub
 before_install:
   - docker pull selcolumbia/oync
 

@@ -109,7 +109,8 @@ module Oync
             cs = Changeset.new(id: cs_id)
 
             # get data from remote
-            response = get(@api_url + "/api/0.6/changeset/#{cs_id}")
+            changeset_url = @api_url + "/api/0.6/changeset/#{cs_id}"
+            response = get(changeset_url)
             if response.is_a?(Net::HTTPSuccess)
                 doc = Nokogiri::XML(response.body)
                 if doc.at('/osm/changeset/@closed_at')
@@ -119,6 +120,7 @@ module Oync
                     cs.status = STATUS_NOT_CLOSED
                 end
             else
+                log.error("failed to retrieve changeset (id #{cs.id}) metadata from #{changeset_url}")
                 cs.status = STATUS_NOT_FOUND
             end
             cs
@@ -149,14 +151,15 @@ module Oync
             # make sure changeset dir has been created
             FileUtils.mkdir_p(@changeset_dir)
             Changeset.where("status = \'#{STATUS_NEW}\'").each do |cs|
-                response = get(@api_url + "/api/0.6/changeset/#{cs.id}/download")
+                changeset_url = @api_url + "/api/0.6/changeset/#{cs.id}/download"
+                response = get(changeset_url)
                 if response.is_a?(Net::HTTPSuccess)
                     osc_file = File.join(@changeset_dir, cs.id.to_s) + ".osc"
                     File.open(osc_file, 'w') { |file| file.write(response.body) }
                     cs.file_location = osc_file
                     cs.status = STATUS_RETRIEVED
                 else
-                    log.error("failed to retrieve changeset (id #{cs.id}) from #{changeset_uri}")
+                    log.error("failed to retrieve changeset (id #{cs.id}) from #{changeset_url}")
                     cs.status = STATUS_NOT_FOUND # other cases to handle?
                 end
                 cs.save

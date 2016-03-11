@@ -12,7 +12,6 @@ require_relative 'changeset'
 module Oync
     class Load
 
-
         CHANGESET_DIR = "changesets"
         CHANGESET_ID_FILE = "changeset_ids.xml"
         NO_CHANGESETS = -1
@@ -24,8 +23,9 @@ module Oync
         STATUS_NOT_CLOSED = "NOT_CLOSED"
         STATUS_NOT_FOUND  = "NOT_FOUND"
         STATUS_FAILED     = "FAILED"
+        DEFAULT_HTTP_READ_TIMEOUT   = 120
 
-        def initialize(api_url, oync_dir, postgis_db, postgis_host, postgis_user, osm_pgsql_style_file)
+        def initialize(api_url, oync_dir, postgis_db, postgis_host, postgis_user, osm_pgsql_style_file, http_read_timeout)
             @api_url = api_url
             @oync_dir = oync_dir
             @postgis_db = postgis_db
@@ -34,8 +34,22 @@ module Oync
             @osm_pgsql_style_file = osm_pgsql_style_file
             @changeset_dir = File.join(@oync_dir, CHANGESET_DIR)
             @changeset_id_file = File.join(@oync_dir, CHANGESET_ID_FILE)
+            @http_read_timeout = http_read_timeout
         end
         
+        def get(url, read_timeout = @http_read_timeout) 
+            
+            # wrap get to handle timeouts
+            url = URI.parse(url)
+            http = Net::HTTP.new(url.host, url.port)
+            http.read_timeout = read_timeout
+            # return the response object
+            http.start() {|http|
+                http.get(url.path)
+            }
+
+        end
+
         def log
             Oync.log
         end
@@ -95,8 +109,8 @@ module Oync
             cs = Changeset.new(id: cs_id)
 
             # get data from remote
-            changeset_uri = URI(@api_url + "/api/0.6/changeset/#{cs_id}")
-            response = Net::HTTP.get_response(changeset_uri)
+            changeset_url = @api_url + "/api/0.6/changeset/#{cs_id}"
+            response = get(changeset_url)
             if response.is_a?(Net::HTTPSuccess)
                 doc = Nokogiri::XML(response.body)
                 if doc.at('/osm/changeset/@closed_at')
@@ -106,6 +120,7 @@ module Oync
                     cs.status = STATUS_NOT_CLOSED
                 end
             else
+                log.error("failed to retrieve changeset (id #{cs.id}) metadata from #{changeset_url}")
                 cs.status = STATUS_NOT_FOUND
             end
             cs
@@ -114,10 +129,8 @@ module Oync
         # get the max changeset id/timestamp from remote system
         def get_remote_max(last_cs_timestamp)
 
-            changeset_uri = URI(@api_url + "/api/0.6/changesets?time=" + 
+            response = get(@api_url + "/api/0.6/changesets?time=" + 
                 last_cs_timestamp.strftime("%FT%T"))
-            
-            response = Net::HTTP.get_response(changeset_uri)
             if response.is_a?(Net::HTTPSuccess)
                 # parse them out and add all changeset files to CHANGESET_DIR
                 doc = Nokogiri::XML(response.body)
@@ -138,15 +151,15 @@ module Oync
             # make sure changeset dir has been created
             FileUtils.mkdir_p(@changeset_dir)
             Changeset.where("status = \'#{STATUS_NEW}\'").each do |cs|
-                changeset_uri = URI(@api_url + "/api/0.6/changeset/#{cs.id}/download")
-                response = Net::HTTP.get_response(changeset_uri)
+                changeset_url = @api_url + "/api/0.6/changeset/#{cs.id}/download"
+                response = get(changeset_url)
                 if response.is_a?(Net::HTTPSuccess)
                     osc_file = File.join(@changeset_dir, cs.id.to_s) + ".osc"
                     File.open(osc_file, 'w') { |file| file.write(response.body) }
                     cs.file_location = osc_file
                     cs.status = STATUS_RETRIEVED
                 else
-                    log.error("failed to retrieve changeset (id #{cs.id}) from #{changeset_uri}")
+                    log.error("failed to retrieve changeset (id #{cs.id}) from #{changeset_url}")
                     cs.status = STATUS_NOT_FOUND # other cases to handle?
                 end
                 cs.save

@@ -58,7 +58,10 @@ if __FILE__ == $0
                                    ENV['OYNC_DB'], 
                                    ENV['OYNC_DB_HOST'],
                                    ENV['OYNC_DB_USER'],
-                                   ENV['OYNC_STYLE_FILE'])
+                                   ENV['OYNC_STYLE_FILE'],
+                                   (ENV['OYNC_READ_TIMEOUT'] || 
+                                   Oync::Load::DEFAULT_HTTP_READ_TIMEOUT).to_i
+                                  )
 
         if options[:update_changeset_ids]
             oync_load.update_changeset_ids

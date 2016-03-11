@@ -168,7 +168,7 @@ module Oync
 
         # process all changesets we've retrieved
         def process_changesets
-            Changeset.where("status = \'#{STATUS_RETRIEVED}\'").each do |cs|
+            Changeset.where("status = \'#{STATUS_RETRIEVED}\'").order(:id).each do |cs|
                 
                 log.info("processing #{cs.file_location}")
                 osm2pgsql_cmd = "osm2pgsql --host #{@postgis_host}"\

@@ -43,6 +43,7 @@ ADD install-osm2pgsql.sh /oync/
 ADD "Gemfile" "Gemfile.lock" /oync/
 
 WORKDIR /oync
+
 # install dependencies
 RUN bash install-osm2pgsql.sh
 RUN bash install-oync.sh
@@ -55,3 +56,9 @@ ADD empty.osm /oync/
 ADD oync.style /oync/
 ADD oync_schema.sql /oync/
 ADD clear.sql /oync/
+
+# install npm modules
+WORKDIR /oync/test
+RUN npm install
+
+WORKDIR /oync
